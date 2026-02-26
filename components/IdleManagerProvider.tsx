@@ -232,9 +232,7 @@ export default function IdleManagerProvider({ children }: IdleManagerProviderPro
   }, [markActivity]);
 
   // Handle "Sign out" button
-  const handleSignOut = useCallback(() => {
-    performKioskSignOut();
-  }, [performKioskSignOut]);
+  // Removed handleSignOut - users can only dismiss by clicking "I'm still here"
 
   // Trigger idle prompt manually (for demo)
   const triggerIdlePrompt = useCallback(() => {
@@ -350,15 +348,14 @@ export default function IdleManagerProvider({ children }: IdleManagerProviderPro
   return (
     <IdleManagerContext.Provider value={{ markActivity, triggerIdlePrompt }}>
       {children}
-      {isKioskRoute && !isSplashPage && (
-        <IdleModal
-          isOpen={idleState === 'prompt' || idleState === 'countdown'}
-          showCountdown={idleState === 'countdown'}
-          countdownText={formatCountdown(countdownRemaining)}
-          onStillHere={handleStillHere}
-          onSignOut={handleSignOut}
-        />
-      )}
+            {isKioskRoute && !isSplashPage && (
+              <IdleModal
+                isOpen={idleState === 'prompt' || idleState === 'countdown'}
+                showCountdown={idleState === 'countdown'}
+                countdownText={formatCountdown(countdownRemaining)}
+                onStillHere={handleStillHere}
+              />
+            )}
       {showDemoButton && <IdleDemoButton />}
     </IdleManagerContext.Provider>
   );
