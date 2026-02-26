@@ -2,8 +2,9 @@
 
 import { useIdleManager } from '@/components/IdleManagerProvider';
 
-// Demo mode flag - set to false in production
-const DEMO_MODE = process.env.NODE_ENV !== 'production';
+// Demo mode flag - always show for prototype/demo purposes
+// In a real app, this would be gated by a feature flag or removed entirely
+const DEMO_MODE = true;
 
 export default function IdleDemoButton() {
   const { triggerIdlePrompt } = useIdleManager();
