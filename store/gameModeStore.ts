@@ -138,12 +138,60 @@ export const useGameModeStore = create<GameModeStore>((set, get) => ({
     
     newSelectedPlayers[slotIndex] = player;
     
-    // Update players array to match filled slots
+    // Update players array: add new players, but don't remove existing ones
+    // This allows players to persist in clubhouse even when slots are cleared
     const filledPlayers = newSelectedPlayers.filter((p): p is Player => p !== null);
+    const existingPlayers = state.players;
+    
+    // Merge: keep existing players, add new ones that aren't already there
+    // Use a Set to track unique player identifiers to prevent duplicates
+    const existingIds = new Set<string>();
+    existingPlayers.forEach((p) => {
+      if (p.type === 'linked' && p.linkedAccountId) {
+        existingIds.add(`linked-${p.linkedAccountId}`);
+      } else if (p.type === 'guest') {
+        // For guests, use the ID as the key
+        existingIds.add(p.id);
+        // Also check by name+color combination to catch duplicates with different IDs
+        if (p.guestColor) {
+          existingIds.add(`guest-${p.displayName}-${p.guestColor}`);
+        }
+      }
+    });
+    
+    const mergedPlayers = [...existingPlayers];
+    filledPlayers.forEach((newPlayer) => {
+      let playerKey: string;
+      let secondaryKey: string | null = null;
+      
+      if (newPlayer.type === 'linked' && newPlayer.linkedAccountId) {
+        playerKey = `linked-${newPlayer.linkedAccountId}`;
+      } else if (newPlayer.type === 'guest') {
+        playerKey = newPlayer.id;
+        // Also check by name+color for guests to prevent duplicates
+        if (newPlayer.guestColor) {
+          secondaryKey = `guest-${newPlayer.displayName}-${newPlayer.guestColor}`;
+        }
+      } else {
+        return; // Skip invalid players
+      }
+      
+      // Check both primary key and secondary key (for guests)
+      const alreadyExists = existingIds.has(playerKey) || 
+        (secondaryKey !== null && existingIds.has(secondaryKey));
+      
+      if (!alreadyExists) {
+        existingIds.add(playerKey);
+        if (secondaryKey) {
+          existingIds.add(secondaryKey);
+        }
+        mergedPlayers.push(newPlayer);
+      }
+    });
     
     set({
       selectedPlayers: newSelectedPlayers,
-      players: filledPlayers,
+      players: mergedPlayers,
     });
   },
 
@@ -154,18 +202,19 @@ export const useGameModeStore = create<GameModeStore>((set, get) => ({
     const newSelectedPlayers = [...state.selectedPlayers];
     newSelectedPlayers[slotIndex] = null;
     
-    const filledPlayers = newSelectedPlayers.filter((p): p is Player => p !== null);
-    
+    // Don't remove from players array - keep them for clubhouse display
+    // Only update selectedPlayers
     set({
       selectedPlayers: newSelectedPlayers,
-      players: filledPlayers,
+      // Keep existing players array unchanged
     });
   },
 
   clearAllSlots: () => {
+    // Only clear selectedPlayers slots, but keep players array for clubhouse display
     set({
       selectedPlayers: [null, null, null, null, null, null, null, null],
-      players: [],
+      // Don't clear players - they should persist for clubhouse
     });
   },
 

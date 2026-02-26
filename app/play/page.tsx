@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useToastStore } from '@/store/toastStore';
 import { useToast } from '@/contexts/ToastContext';
 import { useLinkedAccountsStore } from '@/store/linkedAccountsStore';
@@ -16,11 +16,26 @@ import BayPairingWidget from '@/components/BayPairingWidget';
 
 export default function PlayPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [qrExpanded, setQrExpanded] = useState(false);
+  const qrExpandedRef = useRef(qrExpanded);
   const { pendingToast, setPendingToast } = useToastStore();
   const { showToast } = useToast();
   const { linkedAccounts, linkAccount } = useLinkedAccountsStore();
   const { players } = useGameModeStore();
   const { bayId } = useBayStore();
+  
+  // Update ref when state changes
+  useEffect(() => {
+    qrExpandedRef.current = qrExpanded;
+  }, [qrExpanded]);
+  
+  // Stable callback to prevent render loops
+  const handleQRExpandedChange = useCallback((expanded: boolean) => {
+    // Only update if different to prevent loops
+    if (expanded !== qrExpandedRef.current) {
+      setQrExpanded(expanded);
+    }
+  }, []);
 
   // Check for pending toast on mount (e.g., from auth flow)
   useEffect(() => {
@@ -77,6 +92,14 @@ export default function PlayPage() {
           activeTab="play" 
           showExit={true}
           onPopoverStateChange={setIsPopoverOpen}
+          onRequestQRExpand={() => {
+            // Close popover first, then expand QR
+            setIsPopoverOpen(false);
+            // Small delay to ensure popover closes before QR expands
+            setTimeout(() => {
+              setQrExpanded(true);
+            }, 50);
+          }}
         />
 
         <div 
@@ -150,7 +173,10 @@ export default function PlayPage() {
           </div>
           
           {/* Bay Pairing Widget - positioned under header */}
-          <BayPairingWidget />
+          <BayPairingWidget 
+            forceExpanded={qrExpanded}
+            onExpandedChange={handleQRExpandedChange}
+          />
         </div>
       </div>
     </RangeLayout>

@@ -44,7 +44,7 @@ export default function ModeSetupPage() {
     selectedPlayers,
     setMode,
     setPlayerAtSlot,
-    resetForMode,
+    clearAllSlots,
     getFilledSlotsCount,
   } = useGameModeStore();
 
@@ -61,15 +61,20 @@ export default function ModeSetupPage() {
   const [creationOrigin, setCreationOrigin] = useState<'none' | 'created-from-setup'>('none');
 
   // Initialize mode on mount
+  // Don't reset players when switching modes - preserve them for clubhouse display
   useEffect(() => {
     if (isValidModeId(modeId)) {
       if (selectedModeId !== modeId) {
-        resetForMode(modeId);
+        // Only reset the mode, don't clear players
+        setMode(modeId);
+        // Clear selectedPlayers slots for the new mode, but keep players array
+        // This allows guests to persist in clubhouse
+        clearAllSlots();
       } else {
         setMode(modeId);
       }
     }
-  }, [modeId, selectedModeId, setMode, resetForMode]);
+  }, [modeId, selectedModeId, setMode, clearAllSlots]);
 
   // Hydrate linked accounts from authStore if empty
   useEffect(() => {
@@ -185,6 +190,7 @@ export default function ModeSetupPage() {
   };
 
   const handleOpenCreateAccount = () => {
+    console.log('[Setup] Opening create account modal, setting creationOrigin to created-from-setup');
     setCreationOrigin('created-from-setup');
     setIsCreateAccountModalOpen(true);
   };
@@ -300,46 +306,44 @@ export default function ModeSetupPage() {
 
   const handleCreateAccountComplete = (result?: { accountId: string; displayName: string; email: string }) => {
     console.log('[Setup] handleCreateAccountComplete called with result:', result);
+    console.log('[Setup] creationOrigin:', creationOrigin);
     if (!result) {
       console.log('[Setup] No result provided, skipping slot assignment');
       setCreationOrigin('none');
       return;
     }
 
-    if (creationOrigin === 'created-from-setup') {
-      // Auto-fill next available slot for newly created accounts
-      const nextEmptySlot = findNextEmptySlot();
-      console.log('[Setup] Next empty slot for create account:', nextEmptySlot);
-      
-      if (nextEmptySlot !== null) {
-        // Check if already added
-        const userId = result.accountId;
-        const alreadyAdded = selectedPlayers.some(
-          (p) => p !== null && p.type === 'linked' && p.linkedAccountId === userId
-        );
-        if (alreadyAdded) {
-          showToast('This account is already added', 'info');
-          setCreationOrigin('none');
-          return;
-        }
-
-        const player: Player = {
-          id: `linked-${userId}`,
-          type: 'linked',
-          displayName: result.displayName,
-          linkedAccountId: userId,
-        };
-        console.log('[Setup] Setting player at slot', nextEmptySlot, ':', player);
-        setPlayerAtSlot(nextEmptySlot, player);
-        showToast(`Added ${result.displayName}`, 'success');
-        setPickerOpenSlotIndex(null);
+    // Always try to add to slot if modal was opened from setup page
+    // (creationOrigin might have been reset, but we still want to add the account)
+    const nextEmptySlot = findNextEmptySlot();
+    console.log('[Setup] Next empty slot for create account:', nextEmptySlot);
+    
+    if (nextEmptySlot !== null) {
+      // Check if already added
+      const userId = result.accountId;
+      const alreadyAdded = selectedPlayers.some(
+        (p) => p !== null && p.type === 'linked' && p.linkedAccountId === userId
+      );
+      if (alreadyAdded) {
+        showToast('This account is already added', 'info');
         setCreationOrigin('none');
-      } else {
-        // No empty slots
-        showToast('No empty player slots', 'info');
-        setCreationOrigin('none');
+        return;
       }
+
+      const player: Player = {
+        id: `linked-${userId}`,
+        type: 'linked',
+        displayName: result.displayName,
+        linkedAccountId: userId,
+      };
+      console.log('[Setup] Setting player at slot', nextEmptySlot, ':', player);
+      setPlayerAtSlot(nextEmptySlot, player);
+      showToast(`Added ${result.displayName}`, 'success');
+      setPickerOpenSlotIndex(null);
+      setCreationOrigin('none');
     } else {
+      // No empty slots
+      showToast('No empty player slots', 'info');
       setCreationOrigin('none');
     }
   };
@@ -570,8 +574,8 @@ export default function ModeSetupPage() {
         }}
         onSelectCreateAccount={() => {
           setIsSignInModalOpen(false);
+          setCreationOrigin('created-from-setup'); // Ensure creationOrigin is set
           setIsCreateAccountModalOpen(true);
-          // Keep creationOrigin as 'created-from-setup'
         }}
         onAccountLinked={handleAccountLinked}
         onSignedIn={handleSignedIn}

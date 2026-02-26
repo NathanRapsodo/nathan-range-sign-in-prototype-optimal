@@ -19,12 +19,14 @@ interface LinkedAccountsPopoverProps {
   isOpen: boolean;
   onClose: () => void;
   anchorRef?: React.RefObject<HTMLElement>;
+  onRequestQRExpand?: () => void;
 }
 
 export default function LinkedAccountsPopover({
   isOpen,
   onClose,
   anchorRef,
+  onRequestQRExpand,
 }: LinkedAccountsPopoverProps) {
   const { showToast } = useToast();
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -475,6 +477,17 @@ export default function LinkedAccountsPopover({
           onClose={() => setIsAddAccountMenuOpen(false)}
           onCloseParent={onClose}
           anchorRef={addAccountButtonRef}
+          onSelectScanQR={() => {
+            // Immediately close the choice menu
+            setIsAddAccountMenuOpen(false);
+            // Close the parent popover
+            onClose();
+            // Expand QR after ensuring popovers are closed
+            // Use a longer delay to ensure React has time to unmount the backdrops
+            setTimeout(() => {
+              onRequestQRExpand?.();
+            }, 200);
+          }}
           onSelectSignIn={() => {
             setIsAddAccountMenuOpen(false);
             setIsSignInOpen(true);

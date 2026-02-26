@@ -5,11 +5,49 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useBayStore } from '@/store/bayStore';
 import { getFullPath } from '@/lib/basePath';
 
-export default function BayPairingWidget() {
+interface BayPairingWidgetProps {
+  forceExpanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
+}
+
+export default function BayPairingWidget({ forceExpanded, onExpandedChange }: BayPairingWidgetProps = {} as BayPairingWidgetProps) {
   const { bayId, pairingCode, pairingToken, refreshPairingToken, initBay, isTokenValid } = useBayStore();
   const [pairingUrl, setPairingUrl] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState(false);
   const widgetRef = useRef<HTMLDivElement>(null);
+
+  // Track previous forceExpanded to detect changes
+  const prevForceExpandedRef = useRef(forceExpanded);
+  
+  // Sync with external control - only expand if forceExpanded is true
+  // If user manually closes, onExpandedChange will update parent state
+  useEffect(() => {
+    // Only update if forceExpanded actually changed
+    if (forceExpanded !== prevForceExpandedRef.current) {
+      prevForceExpandedRef.current = forceExpanded;
+      
+      if (forceExpanded === true && !isExpanded) {
+        // Only expand if not already expanded (prevents flicker)
+        setIsExpanded(true);
+      } else if (forceExpanded === false && isExpanded) {
+        // Only auto-close if explicitly set to false (not just undefined)
+        setIsExpanded(false);
+      }
+    }
+  }, [forceExpanded, isExpanded]);
+
+  // Track previous isExpanded to prevent unnecessary callbacks
+  const prevIsExpandedRef = useRef(isExpanded);
+  
+  // Notify parent of expansion changes (only when actually changed)
+  useEffect(() => {
+    if (isExpanded !== prevIsExpandedRef.current) {
+      prevIsExpandedRef.current = isExpanded;
+      if (onExpandedChange) {
+        onExpandedChange(isExpanded);
+      }
+    }
+  }, [isExpanded, onExpandedChange]);
 
   // Initialize bay and ensure token is valid
   useEffect(() => {
@@ -46,7 +84,7 @@ export default function BayPairingWidget() {
   return (
     <div
       ref={widgetRef}
-      className={`fixed top-[100px] right-14 ${isExpanded ? 'z-[50]' : 'z-10'}`}
+      className={`fixed top-[100px] right-14 ${isExpanded ? 'z-[65]' : 'z-10'}`}
     >
       {!isExpanded ? (
         // Collapsed state
@@ -84,7 +122,7 @@ export default function BayPairingWidget() {
         <>
           {/* Transparent backdrop for outside clicks */}
           <div
-            className="fixed inset-0 z-[45]"
+            className="fixed inset-0 z-[64]"
             onClick={() => setIsExpanded(false)}
             onMouseDown={(e) => {
               e.stopPropagation();
@@ -93,7 +131,7 @@ export default function BayPairingWidget() {
           />
 
           {/* Expanded state */}
-          <div className="relative z-[50] bg-white rounded-lg shadow-2xl border border-gray-200 p-6 w-[280px]">
+          <div className="relative z-[65] bg-white rounded-lg shadow-2xl border border-gray-200 p-6 w-[280px]">
             <div className="flex items-center justify-between mb-4">
               <div className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
                 Link account

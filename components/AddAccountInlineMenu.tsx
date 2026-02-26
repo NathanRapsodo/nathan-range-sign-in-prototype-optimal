@@ -6,6 +6,7 @@ interface AddAccountChoicePopoverProps {
   isOpen: boolean;
   onClose: () => void;
   anchorRef?: React.RefObject<HTMLElement>;
+  onSelectScanQR: () => void; // New callback for Scan QR option
   onSelectSignIn: () => void;
   onSelectAddGuest: () => void;
   onCloseParent?: () => void; // Callback to close parent popover
@@ -15,6 +16,7 @@ export default function AddAccountChoicePopover({
   isOpen,
   onClose,
   anchorRef,
+  onSelectScanQR,
   onSelectSignIn,
   onSelectAddGuest,
   onCloseParent,
@@ -103,16 +105,31 @@ export default function AddAccountChoicePopover({
         <div className="p-2 space-y-1">
           <button
             onClick={() => {
+              onSelectScanQR();
+              onClose();
+            }}
+            className="w-full p-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-rapsodo-red transition-colors text-left"
+          >
+            <div className="font-semibold text-gray-900 text-sm uppercase tracking-wide">
+              Scan QR
+            </div>
+            <div className="text-xs text-gray-600 mt-0.5">
+              Scan and sign in on your phone for fastest setup
+            </div>
+          </button>
+
+          <button
+            onClick={() => {
               onSelectSignIn();
               onClose();
             }}
             className="w-full p-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-rapsodo-red transition-colors text-left"
           >
             <div className="font-semibold text-gray-900 text-sm uppercase tracking-wide">
-              Sign in
+              Sign in manually
             </div>
             <div className="text-xs text-gray-600 mt-0.5">
-              Use your Rapsodo Golf account
+              Enter credentials on this screen
             </div>
           </button>
 

@@ -8,9 +8,10 @@ interface TopNavProps {
   activeTab?: 'play' | 'sessions';
   showExit?: boolean;
   onPopoverStateChange?: (isOpen: boolean) => void;
+  onRequestQRExpand?: () => void;
 }
 
-export default function TopNav({ activeTab, showExit = false, onPopoverStateChange }: TopNavProps) {
+export default function TopNav({ activeTab, showExit = false, onPopoverStateChange, onRequestQRExpand }: TopNavProps) {
   const { isAuthed, email } = useAuthStore();
   const [isAccountsPopoverOpen, setIsAccountsPopoverOpen] = useState(false);
   const accountIconRef = useRef<HTMLButtonElement>(null);
@@ -125,6 +126,7 @@ export default function TopNav({ activeTab, showExit = false, onPopoverStateChan
         isOpen={isAccountsPopoverOpen}
         onClose={handleClosePopover}
         anchorRef={accountIconRef}
+        onRequestQRExpand={onRequestQRExpand}
       />
     </div>
   );

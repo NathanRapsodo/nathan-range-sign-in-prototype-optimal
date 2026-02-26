@@ -83,9 +83,12 @@ export default function AddGuestModal({
     // Add to guest profiles store (global pool)
     const profile = addGuestProfile(guestName.trim(), selectedColor);
     
-    // Also add to gameModeStore if needed (for backward compatibility)
-    // But the main source of truth is guestProfilesStore
-    addGuest(guestName.trim(), selectedColor);
+    // Don't add to gameModeStore here - let the caller handle it via setPlayerAtSlot
+    // This prevents duplicates when used from setup page
+    // Only add directly if no callback is provided (for backward compatibility)
+    if (!onGuestCreated) {
+      addGuest(guestName.trim(), selectedColor);
+    }
     
     showToast('Guest added', 'success');
     
