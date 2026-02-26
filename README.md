@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Rapsodo Golf Sign-In Prototype
 
 A clickable UI prototype recreating the Rapsodo Golf range interface with a fullscreen, touchscreen-optimized design.
@@ -74,3 +75,7 @@ rapsodo-range-prototype/
 - Tiles are not clickable (visual only)
 - Only the exit icon on the main screen and navigation buttons are functional
 - Designed for touchscreen range displays
+=======
+# nathan-range-sign-in-prototype-optimal
+A vision for allowing user sign in on Range devices in future
+>>>>>>> 97d7408aa73d22b024d5468df06e1522f4e991fd
