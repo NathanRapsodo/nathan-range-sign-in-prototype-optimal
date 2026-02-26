@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useBayStore } from '@/store/bayStore';
+import { getFullPath } from '@/lib/basePath';
 
 export default function BayPairingWidget() {
   const { bayId, pairingCode, pairingToken, refreshPairingToken, initBay, isTokenValid } = useBayStore();
@@ -146,7 +147,7 @@ export default function BayPairingWidget() {
               <div className="space-y-2">
                 <button
                   onClick={() => {
-                    const url = `/sim/app?bay=${bayId}&token=${pairingToken}`;
+                    const url = getFullPath(`/sim/app?bay=${bayId}&token=${pairingToken}`);
                     window.open(url, 'phone-app', 'width=420,height=840');
                   }}
                   className="w-full px-3 py-2 text-xs bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200 transition-colors"
@@ -155,7 +156,7 @@ export default function BayPairingWidget() {
                 </button>
                 <button
                   onClick={() => {
-                    const url = `/sim/web?bay=${bayId}&token=${pairingToken}`;
+                    const url = getFullPath(`/sim/web?bay=${bayId}&token=${pairingToken}`);
                     window.open(url, 'phone-web', 'width=420,height=840');
                   }}
                   className="w-full px-3 py-2 text-xs bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200 transition-colors"

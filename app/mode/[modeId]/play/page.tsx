@@ -7,6 +7,7 @@ import { useGameModeStore } from '@/store/gameModeStore';
 import { useToast } from '@/contexts/ToastContext';
 import { useIdleManager } from '@/components/IdleManagerProvider';
 import { getGuestColorStyle, type GuestColorToken } from '@/lib/guestColors';
+import { getFullPath } from '@/lib/basePath';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 import InGameSettingsModal from '@/components/InGameSettingsModal';
@@ -79,7 +80,7 @@ export default function ModePlayPage() {
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: 'url(/in_game.png)',
+            backgroundImage: `url(${getFullPath('/in_game.png')})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

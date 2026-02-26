@@ -10,6 +10,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useToast } from '@/contexts/ToastContext';
 import { type GuestColorToken } from '@/lib/guestColors';
 import { formatDisplayName } from '@/lib/nameFormatting';
+import { getFullPath } from '@/lib/basePath';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 import Link from 'next/link';
@@ -85,7 +86,7 @@ export default function ModeSetupPage() {
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url(/game_lobby.png)',
+            backgroundImage: `url(${getFullPath('/game_lobby.png')})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -468,7 +469,7 @@ export default function ModeSetupPage() {
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: 'url(/game_lobby.png)',
+            backgroundImage: `url(${getFullPath('/game_lobby.png')})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

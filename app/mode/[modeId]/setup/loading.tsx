@@ -1,3 +1,5 @@
+import { getFullPath } from '@/lib/basePath';
+
 export default function ModeSetupLoading() {
   // Next.js loading.tsx - shows while the page is loading
   return (
@@ -6,7 +8,7 @@ export default function ModeSetupLoading() {
       <div 
         className="absolute inset-0"
         style={{
-          backgroundImage: 'url(/game_lobby.png)',
+          backgroundImage: `url(${getFullPath('/game_lobby.png')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
