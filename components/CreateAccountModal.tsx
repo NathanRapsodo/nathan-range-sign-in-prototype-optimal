@@ -173,7 +173,6 @@ export default function CreateAccountModal({
 
       // Link account
       const newAccount = linkAccount({
-        id: accountId,
         displayName,
         emailMasked: maskEmail(email),
         source: 'created',

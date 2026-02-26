@@ -16,7 +16,7 @@ export interface LinkedAccountsState {
 }
 
 interface LinkedAccountsStore extends LinkedAccountsState {
-  linkAccount: (account: Omit<LinkedAccount, 'id'>) => LinkedAccount;
+  linkAccount: (account: Omit<LinkedAccount, 'id'> | LinkedAccount) => LinkedAccount;
   unlinkAccount: (accountId: string) => void;
   clearAll: () => void;
   hydrateFromAuthStore: () => void;

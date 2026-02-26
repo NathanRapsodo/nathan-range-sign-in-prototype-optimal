@@ -45,7 +45,7 @@ export default function PlayerSlotGrid({ onSlotClick }: PlayerSlotGridProps) {
           const account = linkedAccounts.find((acc) => (acc.userId || acc.id) === player.linkedAccountId);
           if (account) {
             const verification = getVerificationStatus(account.id);
-            isUnverified = account.source === 'guest-conversion' && verification && !verification.verified;
+            isUnverified = account.source === 'guest-conversion' && !!verification && !verification.verified;
           }
         }
 

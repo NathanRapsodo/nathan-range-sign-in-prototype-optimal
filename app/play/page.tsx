@@ -54,7 +54,6 @@ export default function PlayPage() {
           if (!existing) {
             const formattedName = formatDisplayName(account.name);
             linkAccount({
-              id: account.id,
               displayName: formattedName,
               emailMasked: maskEmail(account.email),
               source: 'simulated',

@@ -1,12 +1,12 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 import type { Session } from '@/lib/types';
 
-export default function RCloudPage() {
+function RCloudPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -214,5 +214,13 @@ export default function RCloudPage() {
         </div>
       </div>
     </RangeLayout>
+  );
+}
+
+export default function RCloudPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rapsodo-red"></div></div>}>
+      <RCloudPageContent />
+    </Suspense>
   );
 }

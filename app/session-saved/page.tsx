@@ -1,14 +1,14 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSessionStore } from '@/store/sessionStore';
 import { useAuthStore } from '@/store/authStore';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 import type { Session } from '@/lib/types';
 
-export default function SessionSavedPage() {
+function SessionSavedPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('sessionId');
@@ -155,5 +155,13 @@ export default function SessionSavedPage() {
         </div>
       </div>
     </RangeLayout>
+  );
+}
+
+export default function SessionSavedPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rapsodo-red"></div></div>}>
+      <SessionSavedPageContent />
+    </Suspense>
   );
 }

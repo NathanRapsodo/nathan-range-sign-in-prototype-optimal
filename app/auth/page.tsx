@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
 import { useToastStore } from '@/store/toastStore';
@@ -12,7 +12,7 @@ import { QRCodeSVG } from 'qrcode.react';
 type AuthMode = 'signin' | 'signup';
 type AuthStep = 'form' | 'otp' | 'verified';
 
-export default function AuthPage() {
+function AuthPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialMode = (searchParams.get('mode') || 'signin') as AuthMode;
@@ -332,8 +332,9 @@ export default function AuthPage() {
         setIsLoading(false);
         // Focus first OTP input
         setTimeout(() => {
-          if (inputRefs.current[0]) {
-            inputRefs.current[0].focus();
+          const firstInput = inputRefs.current[0];
+          if (firstInput) {
+            firstInput.focus();
           }
         }, 100);
         return;
@@ -407,8 +408,9 @@ export default function AuthPage() {
       });
       setOtp(newOtp);
       const nextIndex = Math.min(index + pastedValues.length, 5);
-      if (inputRefs.current[nextIndex]) {
-        inputRefs.current[nextIndex].focus();
+      const nextInput = inputRefs.current[nextIndex];
+      if (nextInput) {
+        nextInput.focus();
       }
       return;
     }
@@ -420,16 +422,18 @@ export default function AuthPage() {
     setOtp(newOtp);
 
     if (value && index < 5) {
-      if (inputRefs.current[index + 1]) {
-        inputRefs.current[index + 1].focus();
+      const nextInput = inputRefs.current[index + 1];
+      if (nextInput) {
+        nextInput.focus();
       }
     }
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      if (inputRefs.current[index - 1]) {
-        inputRefs.current[index - 1].focus();
+      const prevInput = inputRefs.current[index - 1];
+      if (prevInput) {
+        prevInput.focus();
       }
     }
   };
@@ -498,8 +502,9 @@ export default function AuthPage() {
 
       // Clear OTP inputs
       setOtp(['', '', '', '', '', '']);
-      if (inputRefs.current[0]) {
-        inputRefs.current[0].focus();
+      const firstInput = inputRefs.current[0];
+      if (firstInput) {
+        firstInput.focus();
       }
       setError('');
     } catch (error) {
@@ -1023,7 +1028,7 @@ export default function AuthPage() {
                         {otp.map((digit, index) => (
                           <input
                             key={index}
-                            ref={(el) => (inputRefs.current[index] = el)}
+                            ref={(el) => { inputRefs.current[index] = el; }}
                             type="text"
                             inputMode="numeric"
                             maxLength={1}
@@ -1086,5 +1091,13 @@ export default function AuthPage() {
         </div>
       </div>
     </RangeLayout>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rapsodo-red"></div></div>}>
+      <AuthPageContent />
+    </Suspense>
   );
 }

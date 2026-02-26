@@ -1,11 +1,12 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 
-export default function AccountVerifiedPage() {
+function AccountVerifiedPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
@@ -80,5 +81,13 @@ export default function AccountVerifiedPage() {
         </div>
       </div>
     </RangeLayout>
+  );
+}
+
+export default function AccountVerifiedPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rapsodo-red"></div></div>}>
+      <AccountVerifiedPageContent />
+    </Suspense>
   );
 }

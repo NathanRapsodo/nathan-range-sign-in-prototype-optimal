@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import { useToast } from '@/contexts/ToastContext';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
@@ -9,7 +9,7 @@ import { useToastStore } from '@/store/toastStore';
 import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 
-export default function VerifyEmailPage() {
+function VerifyEmailPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
@@ -41,8 +41,9 @@ export default function VerifyEmailPage() {
 
   useEffect(() => {
     // Focus first input on mount
-    if (inputRefs.current[0]) {
-      inputRefs.current[0].focus();
+    const firstInput = inputRefs.current[0];
+    if (firstInput) {
+      firstInput.focus();
     }
   }, []);
 
@@ -59,8 +60,9 @@ export default function VerifyEmailPage() {
       setOtp(newOtp);
       // Focus next empty input or last input
       const nextIndex = Math.min(index + pastedValues.length, 5);
-      if (inputRefs.current[nextIndex]) {
-        inputRefs.current[nextIndex].focus();
+      const nextInput = inputRefs.current[nextIndex];
+      if (nextInput) {
+        nextInput.focus();
       }
       return;
     }
@@ -73,8 +75,9 @@ export default function VerifyEmailPage() {
 
     // Auto-focus next input
     if (value && index < 5) {
-      if (inputRefs.current[index + 1]) {
-        inputRefs.current[index + 1].focus();
+      const nextInput = inputRefs.current[index + 1];
+      if (nextInput) {
+        nextInput.focus();
       }
     }
   };
@@ -82,8 +85,9 @@ export default function VerifyEmailPage() {
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       // Move to previous input on backspace if current is empty
-      if (inputRefs.current[index - 1]) {
-        inputRefs.current[index - 1].focus();
+      const prevInput = inputRefs.current[index - 1];
+      if (prevInput) {
+        prevInput.focus();
       }
     }
   };
@@ -263,8 +267,9 @@ export default function VerifyEmailPage() {
 
       // Clear OTP inputs
       setOtp(['', '', '', '', '', '']);
-      if (inputRefs.current[0]) {
-        inputRefs.current[0].focus();
+      const firstInput = inputRefs.current[0];
+      if (firstInput) {
+        firstInput.focus();
       }
       // Show success message
       setError(''); // Clear any errors
@@ -363,7 +368,7 @@ export default function VerifyEmailPage() {
                   {otp.map((digit, index) => (
                     <input
                       key={index}
-                      ref={(el) => (inputRefs.current[index] = el)}
+                      ref={(el) => { inputRefs.current[index] = el; }}
                       type="text"
                       inputMode="numeric"
                       maxLength={1}
@@ -406,5 +411,13 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </RangeLayout>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rapsodo-red"></div></div>}>
+      <VerifyEmailPageContent />
+    </Suspense>
   );
 }
