@@ -1,0 +1,554 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="5.0" version="21.0.0" etag="user-flow" type="device">
+  <diagram name="User Flow - Range Bay Sign-In" id="user-flow">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- START -->
+        <mxCell id="start" value="User Arrives at Bay Device" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="600" y="40" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Play Screen -->
+        <mxCell id="play-screen" value="Play Screen&#xa;• Game Mode Tiles&#xa;• QR Code Widget&#xa;• In the Clubhouse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="160" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="start" target="play-screen">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="200" as="sourcePoint" />
+            <mxPoint x="750" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Decision: How to link account? -->
+        <mxCell id="decision-link" value="How to link account?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="550" y="300" width="300" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="play-screen" target="decision-link">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="300" as="sourcePoint" />
+            <mxPoint x="750" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option 1: QR Code (App) -->
+        <mxCell id="qr-app" value="Scan QR Code&#xa;(App Installed)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="200" y="480" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3a" value="QR Code" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#0066CC;fontSize=10;fontColor=#0066CC;" edge="1" parent="1" source="decision-link" target="qr-app">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="500" y="360" />
+              <mxPoint x="275" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="qr-app-steps" value="1. Open app on phone&#xa;2. Scan QR code&#xa;3. Confirm pairing&#xa;4. Account linked" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="560" width="150" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3a-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#0066CC;" edge="1" parent="1" source="qr-app" target="qr-app-steps">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="275" y="580" as="sourcePoint" />
+            <mxPoint x="325" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option 2: QR Code (Web) -->
+        <mxCell id="qr-web" value="Scan QR Code&#xa;(No App)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="480" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3b" value="QR Code" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC6600;fontSize=10;fontColor=#CC6600;" edge="1" parent="1" source="decision-link" target="qr-web">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="400" as="sourcePoint" />
+            <mxPoint x="750" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="qr-web-decision" value="Sign in or&#xa;Create account?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="560" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3b-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#CC6600;" edge="1" parent="1" source="qr-web" target="qr-web-decision">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="675" y="580" as="sourcePoint" />
+            <mxPoint x="725" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="web-signin" value="Sign In&#xa;Existing Account" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="500" y="680" width="120" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="web-create" value="Create Account&#xa;(4-Step Wizard)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="680" y="680" width="120" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-web-signin" value="Sign In" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#CC6600;fontSize=9;fontColor=#CC6600;" edge="1" parent="1" source="qr-web-decision" target="web-signin">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="640" as="sourcePoint" />
+            <mxPoint x="700" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="560" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-web-create" value="Create" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#CC6600;fontSize=9;fontColor=#CC6600;" edge="1" parent="1" source="qr-web-decision" target="web-create">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="640" as="sourcePoint" />
+            <mxPoint x="750" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="web-success" value="Account Linked&#xa;Success!" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="760" width="150" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-web-signin-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#CC6600;" edge="1" parent="1" source="web-signin" target="web-success">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="560" y="730" as="sourcePoint" />
+            <mxPoint x="610" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="560" y="705" />
+              <mxPoint x="675" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-web-create-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#CC6600;" edge="1" parent="1" source="web-create" target="web-success">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="740" y="730" as="sourcePoint" />
+            <mxPoint x="790" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="705" />
+              <mxPoint x="675" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option 3: Manual Sign-In -->
+        <mxCell id="manual-signin" value="Manual Sign-In&#xa;on Bay Device" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="480" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3c" value="Manual" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#9900CC;fontSize=10;fontColor=#9900CC;" edge="1" parent="1" source="decision-link" target="manual-signin">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="400" as="sourcePoint" />
+            <mxPoint x="850" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="900" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="manual-decision" value="Sign in or&#xa;Create account?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="560" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-manual-1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9900CC;" edge="1" parent="1" source="manual-signin" target="manual-decision">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1075" y="580" as="sourcePoint" />
+            <mxPoint x="1125" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="manual-signin-account" value="Sign In" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="950" y="680" width="120" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="manual-create" value="Create Account&#xa;(4 Steps)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="680" width="120" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-manual-signin" value="Sign In" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9900CC;fontSize=9;fontColor=#9900CC;" edge="1" parent="1" source="manual-decision" target="manual-signin-account">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1050" y="640" as="sourcePoint" />
+            <mxPoint x="1100" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1010" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-manual-create" value="Create" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9900CC;fontSize=9;fontColor=#9900CC;" edge="1" parent="1" source="manual-decision" target="manual-create">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1150" y="640" as="sourcePoint" />
+            <mxPoint x="1200" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1190" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="manual-success" value="Account Linked" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="760" width="150" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-manual-signin-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9900CC;" edge="1" parent="1" source="manual-signin-account" target="manual-success">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1010" y="730" as="sourcePoint" />
+            <mxPoint x="1060" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1010" y="705" />
+              <mxPoint x="1075" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-manual-create-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#9900CC;" edge="1" parent="1" source="manual-create" target="manual-success">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1190" y="730" as="sourcePoint" />
+            <mxPoint x="1240" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1190" y="705" />
+              <mxPoint x="1075" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option 4: Add Guest -->
+        <mxCell id="add-guest" value="Add Guest Player" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="480" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow3d" value="Guest" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF6600;fontSize=10;fontColor=#FF6600;" edge="1" parent="1" source="decision-link" target="add-guest">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="450" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="guest-steps" value="1. Enter name&#xa;2. Select color&#xa;3. Guest added" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="560" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-guest" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#FF6600;" edge="1" parent="1" source="add-guest" target="guest-steps">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="475" y="580" as="sourcePoint" />
+            <mxPoint x="525" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Converge to Account Linked/Guest Added -->
+        <mxCell id="converge" value="Account/Guest Active" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="880" width="300" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-converge-1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="qr-app-steps" target="converge">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="275" y="700" as="sourcePoint" />
+            <mxPoint x="325" y="750" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="275" y="660" />
+              <mxPoint x="700" y="660" />
+              <mxPoint x="700" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-converge-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="web-success" target="converge">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="675" y="810" as="sourcePoint" />
+            <mxPoint x="725" y="860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-converge-3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="manual-success" target="converge">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1075" y="810" as="sourcePoint" />
+            <mxPoint x="1125" y="860" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1075" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-converge-4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="guest-steps" target="converge">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="475" y="640" as="sourcePoint" />
+            <mxPoint x="525" y="690" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="475" y="660" />
+              <mxPoint x="700" y="660" />
+              <mxPoint x="700" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Decision: What next? -->
+        <mxCell id="decision-next" value="What next?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="575" y="980" width="250" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-next" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="converge" target="decision-next">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="940" as="sourcePoint" />
+            <mxPoint x="750" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option: Start Game -->
+        <mxCell id="start-game" value="Start Game" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1120" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-game" value="Start Game" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC0099;fontSize=10;fontColor=#CC0099;" edge="1" parent="1" source="decision-next" target="start-game">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="1080" as="sourcePoint" />
+            <mxPoint x="650" y="1130" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="500" y="1030" />
+              <mxPoint x="300" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="game-setup" value="Game Mode Setup&#xa;• Select game mode&#xa;• Add players to slots&#xa;  (linked accounts, guests, or create new)&#xa;• Configure settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1220" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-game-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC0099;" edge="1" parent="1" source="start-game" target="game-setup">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1180" as="sourcePoint" />
+            <mxPoint x="350" y="1230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="game-play" value="Game Play" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1380" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-game-3" value="Continue" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC0099;fontSize=10;fontColor=#CC0099;" edge="1" parent="1" source="game-setup" target="game-play">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1340" as="sourcePoint" />
+            <mxPoint x="350" y="1390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Option: Manage Accounts -->
+        <mxCell id="manage-accounts" value="Manage Accounts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1120" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-manage" value="Manage" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#0066CC;fontSize=10;fontColor=#0066CC;" edge="1" parent="1" source="decision-next" target="manage-accounts">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="1080" as="sourcePoint" />
+            <mxPoint x="750" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="manage-options" value="Account Management&#xa;• View linked accounts&#xa;• Sign out accounts&#xa;• Add more accounts/guests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1220" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-manage-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#0066CC;" edge="1" parent="1" source="manage-accounts" target="manage-options">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="1180" as="sourcePoint" />
+            <mxPoint x="750" y="1230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Guest Sign-Out Flow -->
+        <mxCell id="guest-signout" value="Guest Sign-Out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1360" width="200" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-guest-signout" value="Sign out guest" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#FF6600;fontSize=9;fontColor=#FF6600;" edge="1" parent="1" source="manage-options" target="guest-signout">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="1320" as="sourcePoint" />
+            <mxPoint x="750" y="1370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="guest-upsell" value="Upsell Modal&#xa;Create account to save data?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1450" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-upsell" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#FF6600;" edge="1" parent="1" source="guest-signout" target="guest-upsell">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="1410" as="sourcePoint" />
+            <mxPoint x="750" y="1460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="guest-create-account" value="Create Account&#xa;(Data Preserved)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1570" width="150" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="guest-signout-anyway" value="Sign Out Anyway&#xa;(Data Lost)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="750" y="1570" width="150" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-create-account" value="Yes" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#FF6600;fontSize=9;fontColor=#FF6600;" edge="1" parent="1" source="guest-upsell" target="guest-create-account">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="1530" as="sourcePoint" />
+            <mxPoint x="700" y="1580" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="575" y="1490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-signout-anyway" value="No" style="endArrow=classic;html=1;rounded=0;strokeWidth=1;strokeColor=#FF6600;fontSize=9;fontColor=#FF6600;" edge="1" parent="1" source="guest-upsell" target="guest-signout-anyway">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="750" y="1530" as="sourcePoint" />
+            <mxPoint x="800" y="1580" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="825" y="1490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Idle Timeout Flow -->
+        <mxCell id="idle-warning" value="Idle Warning&#xa;(5 min inactivity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="1120" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-idle" value="Inactivity" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;fontSize=10;fontColor=#FF0000;dashed=1;" edge="1" parent="1" source="decision-next" target="idle-warning">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="1080" as="sourcePoint" />
+            <mxPoint x="850" y="1130" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="900" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="idle-decision" value="Still here?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1025" y="1220" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-idle-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;" edge="1" parent="1" source="idle-warning" target="idle-decision">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="1180" as="sourcePoint" />
+            <mxPoint x="1150" y="1230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="idle-reset" value="Timer Reset&#xa;Continue Using" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1340" width="150" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="idle-signout" value="Auto Sign-Out&#xa;(10 min total)&#xa;All accounts/guests removed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="1340" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-idle-yes" value="Yes" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;fontSize=10;fontColor=#FF0000;" edge="1" parent="1" source="idle-decision" target="idle-reset">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1050" y="1300" as="sourcePoint" />
+            <mxPoint x="1100" y="1350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1025" y="1260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-idle-no" value="No" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;fontSize=10;fontColor=#FF0000;" edge="1" parent="1" source="idle-decision" target="idle-signout">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1150" y="1300" as="sourcePoint" />
+            <mxPoint x="1200" y="1350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1225" y="1260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="idle-return" value="Return to Home Screen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="1460" width="200" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-idle-return" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;" edge="1" parent="1" source="idle-signout" target="idle-return">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1225" y="1420" as="sourcePoint" />
+            <mxPoint x="1275" y="1470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Loop back to play screen -->
+        <mxCell id="arrow-loop" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;dashed=1;" edge="1" parent="1" source="idle-reset" target="play-screen">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1025" y="1390" as="sourcePoint" />
+            <mxPoint x="1075" y="1440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1025" y="1600" />
+              <mxPoint x="700" y="1600" />
+              <mxPoint x="700" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-loop-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;dashed=1;" edge="1" parent="1" source="manage-options" target="converge">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="1320" as="sourcePoint" />
+            <mxPoint x="750" y="1370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="700" y="1270" />
+              <mxPoint x="700" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- END states -->
+        <mxCell id="end-game" value="Game Complete" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1480" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-end-game" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#CC0099;" edge="1" parent="1" source="game-play" target="end-game">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1440" as="sourcePoint" />
+            <mxPoint x="350" y="1490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="end-signout" value="Signed Out" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1660" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="end-signout-2" value="Signed Out" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="1660" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="end-idle" value="Returned to Home" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;align=center;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="1550" width="200" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-end-signout-1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF6600;" edge="1" parent="1" source="guest-create-account" target="end-signout">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="575" y="1620" as="sourcePoint" />
+            <mxPoint x="625" y="1670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-end-signout-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF6600;" edge="1" parent="1" source="guest-signout-anyway" target="end-signout-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="825" y="1620" as="sourcePoint" />
+            <mxPoint x="875" y="1670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-end-idle" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#FF0000;" edge="1" parent="1" source="idle-return" target="end-idle">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1200" y="1510" as="sourcePoint" />
+            <mxPoint x="1250" y="1560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

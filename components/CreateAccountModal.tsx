@@ -7,6 +7,7 @@ import { useGameModeStore } from '@/store/gameModeStore';
 import { useToast } from '@/contexts/ToastContext';
 import { maskEmail } from '@/lib/emailMasking';
 import { formatDisplayNameFromParts } from '@/lib/nameFormatting';
+import { type GuestColorToken } from '@/lib/guestColors';
 import AppDownloadPromoPanel from '@/components/AppDownloadPromoPanel';
 
 type CompletionMode = 'return-to-play' | 'finish-and-signout';
@@ -18,6 +19,9 @@ interface CreateAccountModalProps {
   completionMode?: CompletionMode;
   onComplete?: (result?: { accountId: string; displayName: string; email: string }) => void;
   onAccountCreated?: (accountId: string) => void; // Callback when account is created (for setup page)
+  linkToBayAfterCreate?: boolean; // Whether to link account to bay after creation (default: true)
+  elevatedZIndex?: boolean; // Use higher z-index for stacking above other modals (default: false)
+  guestColor?: GuestColorToken; // Guest color to preserve when converting guest to account
   initialValues?: {
     firstName?: string;
     lastName?: string;
@@ -34,10 +38,13 @@ export default function CreateAccountModal({
   completionMode = 'return-to-play',
   onComplete,
   onAccountCreated,
+  linkToBayAfterCreate = true,
+  elevatedZIndex = false,
+  guestColor,
   initialValues,
 }: CreateAccountModalProps) {
   const { showToast } = useToast();
-  const { linkAccount } = useLinkedAccountsStore();
+  const { linkAccount, unlinkAccount } = useLinkedAccountsStore();
   const { markVerificationSent, migrateGuestPlaysToAccount } = useAccountDataStore();
   const { getGuestPlays, clearGuestData, removePlayer } = useGameModeStore();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -171,15 +178,26 @@ export default function CreateAccountModal({
       const accountId = `acct-${Date.now()}-${Math.random().toString(36).substring(7)}`;
       const displayName = formatDisplayNameFromParts(firstName, lastName);
 
-      // Link account
+      // Always link account to store so it persists and shows up in accounts popover/clubhouse
+      // The account will be in linkedAccountsStore regardless of linkToBayAfterCreate
+      // The difference is: if linkToBayAfterCreate is false, we don't add it to players array
       const newAccount = linkAccount({
+        id: accountId,
         displayName,
         emailMasked: maskEmail(email),
         source: 'created',
         email: email,
+        guestColor, // Preserve guest color if provided
+      });
+      
+      console.log('[CreateAccountModal] Account created and linked:', {
+        accountId: newAccount.id,
+        email: newAccount.email,
+        linkToBayAfterCreate,
+        migrateFromGuestId,
       });
 
-      // Mark verification as sent
+      // Mark verification as sent (uses accountDataStore, not linkedAccountsStore)
       markVerificationSent(newAccount.id);
 
       // Migrate guest data if provided
@@ -191,6 +209,10 @@ export default function CreateAccountModal({
         // Clear guest data and remove guest player
         clearGuestData(migrateFromGuestId);
         removePlayer(migrateFromGuestId);
+        
+        // If linkToBayAfterCreate is false, don't add the account to players array
+        // The account is in linkedAccountsStore (so it shows up), but not in players (so it's not "active")
+        // We don't need to do anything here - just don't call addLinkedAccount
       }
 
       // Store email, account ID, and display name for Step 4 display
@@ -209,15 +231,15 @@ export default function CreateAccountModal({
   };
 
   const handleStartPlaying = () => {
-    if (completionMode === 'return-to-play' && onComplete && createdAccountId && createdAccountDisplayName && createdAccountEmail) {
-      // Call onComplete with full account details for return-to-play mode
+    // Always call onComplete if provided, with account details
+    if (onComplete && createdAccountId && createdAccountDisplayName && createdAccountEmail) {
       onComplete({
         accountId: createdAccountId,
         displayName: createdAccountDisplayName,
         email: createdAccountEmail,
       });
     } else if (onComplete) {
-      // Fallback for other modes or if data is missing
+      // Fallback if data is missing
       onComplete(createdAccountId ? { accountId: createdAccountId, displayName: createdAccountDisplayName || '', email: createdAccountEmail || '' } : undefined);
     }
     onClose();
@@ -225,16 +247,20 @@ export default function CreateAccountModal({
 
   if (!isOpen) return null;
 
+  // Use higher z-index if elevatedZIndex is true (for stacking above other modals)
+  const backdropZIndex = elevatedZIndex ? 'z-[100]' : 'z-[60]';
+  const modalZIndex = elevatedZIndex ? 'z-[110]' : 'z-[70]';
+
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-[60]"
+        className={`fixed inset-0 bg-black/50 ${backdropZIndex}`}
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+      <div className={`fixed inset-0 ${modalZIndex} flex items-center justify-center p-4`}>
         <div
           ref={modalRef}
           className="bg-white rounded-lg shadow-2xl w-full max-w-[720px] min-w-[520px] max-h-[80vh] overflow-y-auto"

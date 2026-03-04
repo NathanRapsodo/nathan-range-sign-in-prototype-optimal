@@ -190,7 +190,7 @@ export default function BayPairingWidget({ forceExpanded, onExpandedChange }: Ba
                   }}
                   className="w-full px-3 py-2 text-xs bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200 transition-colors"
                 >
-                  Simulate scan (App installed)
+                  Simulate scan (KMP app installed)
                 </button>
                 <button
                   onClick={() => {
@@ -199,7 +199,7 @@ export default function BayPairingWidget({ forceExpanded, onExpandedChange }: Ba
                   }}
                   className="w-full px-3 py-2 text-xs bg-gray-100 text-gray-700 font-medium rounded hover:bg-gray-200 transition-colors"
                 >
-                  Simulate scan (No app installed)
+                  Simulate scan (no KMP app installed, browser login)
                 </button>
               </div>
             </div>

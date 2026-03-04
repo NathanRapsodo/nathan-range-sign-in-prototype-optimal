@@ -16,7 +16,7 @@ export default function IdleDemoButton() {
   return (
     <button
       onClick={triggerIdlePrompt}
-      className="fixed bottom-6 right-6 z-[9998] w-12 h-12 rounded-full bg-gray-800/70 hover:bg-gray-800/90 text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center shadow-lg hover:shadow-xl transition-all backdrop-blur-sm border border-white/20"
+      className="fixed bottom-20 right-6 z-[9998] w-12 h-12 rounded-full bg-gray-800/70 hover:bg-gray-800/90 text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center shadow-lg hover:shadow-xl transition-all backdrop-blur-sm border border-white/20"
       title="Show idle modal (demo)"
       aria-label="Trigger idle modal for demo"
     >

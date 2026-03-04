@@ -13,6 +13,7 @@ import RangeLayout from '@/components/RangeLayout';
 import TopNav from '@/components/TopNav';
 import TileGrid from '@/components/TileGrid';
 import BayPairingWidget from '@/components/BayPairingWidget';
+import EndSessionButton from '@/components/EndSessionButton';
 
 export default function PlayPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -87,7 +88,7 @@ export default function PlayPage() {
 
   return (
     <RangeLayout>
-      <div className="w-full h-full flex flex-col bg-range-panel overflow-hidden">
+      <div className="w-full h-full flex flex-col bg-range-panel overflow-hidden relative">
         <TopNav 
           activeTab="play" 
           showExit={true}
@@ -103,7 +104,7 @@ export default function PlayPage() {
         />
 
         <div 
-          className={`flex-1 flex flex-col overflow-hidden ${isPopoverOpen ? 'pointer-events-none' : ''}`}
+          className={`flex-1 flex flex-col overflow-hidden pb-[32px] ${isPopoverOpen ? 'pointer-events-none' : ''}`}
         >
           {/* Welcome title */}
           <div className="px-8 py-6">
@@ -127,7 +128,14 @@ export default function PlayPage() {
                       key={account.id}
                       className="px-3 py-1.5 bg-gray-100 rounded-lg border border-gray-200 flex items-center gap-2"
                     >
-                      <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-semibold text-xs">
+                      <div
+                        style={account.guestColor ? getGuestColorStyle(account.guestColor as GuestColorToken) : undefined}
+                        className={`w-6 h-6 rounded-full flex items-center justify-center font-semibold text-xs ${
+                          account.guestColor
+                            ? 'text-white'
+                            : 'bg-gray-300 text-gray-700'
+                        }`}
+                      >
                         {account.displayName.charAt(0).toUpperCase()}
                       </div>
                       <span className="text-sm font-medium text-gray-900">
@@ -178,6 +186,13 @@ export default function PlayPage() {
             onExpandedChange={handleQRExpandedChange}
           />
         </div>
+        
+        {/* Bottom container with End session button - positioned at bottom of screen viewport */}
+        {(linkedAccounts.length > 0 || players.filter(p => p.type === 'guest').length > 0) && (
+          <div className="absolute bottom-5 left-0 right-0 bg-range-panel flex items-start justify-end pr-6 pt-1 z-10">
+            <EndSessionButton />
+          </div>
+        )}
       </div>
     </RangeLayout>
   );

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { useAuthStore } from '@/store/authStore';
+import { type GuestColorToken } from '@/lib/guestColors';
 
 export interface LinkedAccount {
   id: string;
@@ -8,6 +9,7 @@ export interface LinkedAccount {
   source?: 'authStore' | 'simulated' | 'guest-conversion' | 'manual-signin' | 'created';
   userId?: string; // For reference to authStore userId
   email?: string; // Full email if available
+  guestColor?: GuestColorToken; // Preserved from guest conversion
 }
 
 export interface LinkedAccountsState {

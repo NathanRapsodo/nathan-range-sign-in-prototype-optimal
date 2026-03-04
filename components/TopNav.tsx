@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { useAuthStore } from '@/store/authStore';
+import { useLinkedAccountsStore } from '@/store/linkedAccountsStore';
+import { useGameModeStore } from '@/store/gameModeStore';
 import LinkedAccountsPopover from '@/components/LinkedAccountsPopover';
 
 interface TopNavProps {
@@ -12,9 +13,14 @@ interface TopNavProps {
 }
 
 export default function TopNav({ activeTab, showExit = false, onPopoverStateChange, onRequestQRExpand }: TopNavProps) {
-  const { isAuthed, email } = useAuthStore();
+  const { linkedAccounts } = useLinkedAccountsStore();
+  const { players } = useGameModeStore();
   const [isAccountsPopoverOpen, setIsAccountsPopoverOpen] = useState(false);
-  const accountIconRef = useRef<HTMLButtonElement>(null);
+  const accountButtonRef = useRef<HTMLButtonElement>(null);
+  
+  // Count linked accounts + guests
+  const guests = players.filter(p => p.type === 'guest');
+  const accountCount = linkedAccounts.length + guests.length;
 
   const handleOpenAccounts = () => {
     setIsAccountsPopoverOpen(true);
@@ -54,7 +60,7 @@ export default function TopNav({ activeTab, showExit = false, onPopoverStateChan
       </div>
 
       {showExit && (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-3">
           {/* Green status icon */}
           <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
             <div className="w-3 h-3 rounded-full bg-white" />
@@ -79,45 +85,49 @@ export default function TopNav({ activeTab, showExit = false, onPopoverStateChan
           <div className="px-4 py-1.5 bg-white border border-gray-300 rounded text-sm font-medium text-gray-700">
             UNIT SYSTEM
           </div>
-          {/* Account Icon - Opens Accounts Popover */}
-          <div className="flex flex-col items-end">
-            <button
-              ref={accountIconRef}
-              onClick={handleOpenAccounts}
-              className="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded transition-colors"
-              aria-label="Accounts"
+          {/* Account Pill Button - Opens Accounts Popover */}
+          <button
+            ref={accountButtonRef}
+            onClick={handleOpenAccounts}
+            className={`px-3 py-2 rounded-full active:scale-[0.98] transition-all duration-150 flex items-center gap-2 min-w-[100px] ${
+              accountCount === 0
+                ? 'bg-rapsodo-red text-white hover:bg-red-700 active:bg-red-800'
+                : 'bg-white text-rapsodo-red border border-rapsodo-red hover:bg-red-50 active:bg-red-100'
+            }`}
+            aria-label={accountCount === 0 ? "Sign in" : "Manage users"}
+          >
+            {/* User icon */}
+            <svg
+              className={`w-5 h-5 flex-shrink-0 ${
+                accountCount === 0 ? 'text-white' : 'text-rapsodo-red'
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              {!isAuthed ? (
-                <svg
-                  className="w-6 h-6 transition-all duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white text-sm font-medium transition-all duration-300 scale-100 hover:scale-105">
-                  {email?.charAt(0).toUpperCase() || 'U'}
-                </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+            {/* Text content */}
+            <div className="flex flex-col items-start flex-1 min-w-0">
+              <span className={`text-sm font-medium leading-tight ${
+                accountCount === 0 ? 'text-white' : 'text-rapsodo-red'
+              }`}>
+                {accountCount === 0 ? 'Sign in' : `${accountCount} user${accountCount !== 1 ? 's' : ''}`}
+              </span>
+              {accountCount > 0 && (
+                <span className={`text-[10px] leading-tight ${
+                  accountCount === 0 ? 'text-white/80' : 'text-rapsodo-red/80'
+                }`}>
+                  Tap to manage
+                </span>
               )}
-            </button>
-            {/* Signed in label below icon */}
-            {isAuthed && email && (() => {
-              const displayName = email.split('@')[0];
-              const capitalizedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
-              return (
-                <div className="mt-1 text-xs text-gray-600 text-center max-w-[80px] truncate">
-                  Signed in as {capitalizedName}
-                </div>
-              );
-            })()}
-          </div>
+            </div>
+          </button>
         </div>
       )}
 
@@ -125,7 +135,7 @@ export default function TopNav({ activeTab, showExit = false, onPopoverStateChan
       <LinkedAccountsPopover
         isOpen={isAccountsPopoverOpen}
         onClose={handleClosePopover}
-        anchorRef={accountIconRef}
+        anchorRef={accountButtonRef}
         onRequestQRExpand={onRequestQRExpand}
       />
     </div>
